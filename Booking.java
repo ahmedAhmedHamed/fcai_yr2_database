@@ -21,7 +21,7 @@ public class Booking {
         System.out.println(class_type);
         System.out.println("seats_booked");
         System.out.println(seats_booked);
-        
+
         System.out.println("=============");
     }
 }
