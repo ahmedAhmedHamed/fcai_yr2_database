@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/fcai_yr2_database.iml" filepath="$PROJECT_DIR$/fcai_yr2_database.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sqlconn/sqlconn.iml" filepath="$PROJECT_DIR$/sqlconn/sqlconn.iml" />
     </modules>
   </component>
 </project>

@@ -1,6 +1,6 @@
 
 public class main {
     public static void main(String[] args) {
-        System.out.println("Hello World of Java!!");
+        mainWrapper startup = new mainWrapper();
     }
 }
