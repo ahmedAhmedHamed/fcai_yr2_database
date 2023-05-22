@@ -42,6 +42,10 @@ public class MainWrapper {
             login();
         }
         else if (choice == 2) {
+            if (current_user == null) {
+                System.out.println("no user is logged in at the moment");
+                return;
+            }
             current_user.print_user_information();
         } else if (choice == -1) {
             System.exit(0);

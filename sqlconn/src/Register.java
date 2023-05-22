@@ -3,6 +3,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * class responsible for registering a new user
+ */
 public class Register {
     User current_user = null;
     Connection conn;
@@ -55,6 +58,7 @@ public class Register {
         } catch (SQLException e) {
             System.out.println("Failed to insert the new user into the database!");
             e.printStackTrace();
+            current_user = null;
         }
     }
 }

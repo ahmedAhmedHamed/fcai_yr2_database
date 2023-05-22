@@ -10,6 +10,7 @@ public class AccountManager {
     Connection conn;
     User current_user;
     Register Register = null;
+    Login Login = null;
 
     /**
      * constructs account manager
@@ -26,9 +27,9 @@ public class AccountManager {
     }
 
     public void login() {
-        Register = new Register(conn);
-        Register.register();
-        current_user = Register.current_user;
+        Login = new Login(conn);
+        Login.login();
+        current_user = Login.current_user;
     }
 
 
