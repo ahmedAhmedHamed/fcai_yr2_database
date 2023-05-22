@@ -1,9 +1,9 @@
 use master;
-create database flight
+create database flight;
 
 -- user table
 CREATE TABLE users (
-    user_id INT PRIMARY KEY,
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(10) NOT NULL,
     user_type VARCHAR(10) NOT NULL
@@ -12,7 +12,7 @@ CREATE TABLE users (
 
 -- Creating the aircraft table
 CREATE TABLE aircraft (
-    aircraft_id INT PRIMARY KEY,
+    aircraft_id INT PRIMARY KEY AUTO_INCREMENT,
     aircraft_name VARCHAR(50) NOT NULL,
     total_seats INT NOT NULL 
 );
@@ -23,14 +23,14 @@ CREATE TABLE flights (
     flight_date DATE NOT NULL,
     sourcee VARCHAR(10) NOT NULL,
     destination VARCHAR(50) NOT NULL,
-    aircraft_id INT NOT NULL,
+    aircraft_id INT NOT NULL AUTO_INCREMENT,
     FOREIGN KEY (aircraft_id) REFERENCES aircraft(aircraft_id)
 );
 
 
 -- Creating the booking table
 CREATE TABLE booking (
-    booking_id INT PRIMARY KEY,
+    booking_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     flight_id INT NOT NULL,
     class_type VARCHAR(10) NOT NULL,
