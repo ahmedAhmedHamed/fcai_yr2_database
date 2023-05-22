@@ -7,12 +7,16 @@ import java.sql.SQLException;
  */
 public class MainWrapper {
     Connection conn;
+    AccountManager AccountManager = null;
+
+    User currentUser = null;
 
     /**
      * connects to database and enters the input loop
      */
     MainWrapper() {
         connect_to_database();
+        AccountManager = new AccountManager(conn);
     }
 
     /**
@@ -37,6 +41,7 @@ public class MainWrapper {
         } catch (SQLException e) {
             System.out.println("Failed to connect to the database!");
             e.printStackTrace();
+            System.exit(0);
         }
     }
 }
