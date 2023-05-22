@@ -27,8 +27,16 @@ public class AccountManager {
         System.out.println("insert your username");
         current_user.username = sc.nextLine();
 
-        System.out.println("insert your password");
+        //TODO make a function to check if username is correct.
+
+        System.out.println("insert your password, its length needs to be between 3 and 10 (inclusive).");
         current_user.password = sc.nextLine();
+
+        while (current_user.password.length() > 10 || current_user.password.length() < 3) {
+            System.out.println("invalid password length.");
+            System.out.println("its length needs to be between 3 and 10 (inclusive).");
+            current_user.password = sc.nextLine();
+        }
 
         current_user.user_type = "user";
 
