@@ -8,9 +8,9 @@ import java.util.Scanner;
  */
 public class MainWrapper {
     Connection conn;
-    AccountManager AccountManager = null;
-
     User current_user = null;
+    AccountManager AccountManager = null;
+    AircraftManager AircraftManager = null;
 
     /**
      * connects to database and enters the input loop
@@ -18,6 +18,7 @@ public class MainWrapper {
     MainWrapper() {
         connect_to_database();
         AccountManager = new AccountManager(conn);
+        AircraftManager = new AircraftManager(conn);
 
         while (true) {
             handleSignal();
@@ -26,12 +27,13 @@ public class MainWrapper {
 
     public void handleSignal() {
         Scanner sc = new Scanner(System.in);
+        System.out.println();
         System.out.println("insert choice");
         System.out.println("0 for registration");
         System.out.println("1 for login");
         System.out.println("2 for showing which user is shown");
+        System.out.println("3 to enter a new aircraft");
         System.out.println("-1 TO EXIT");
-
 
         int choice = sc.nextInt();
 
@@ -47,7 +49,13 @@ public class MainWrapper {
                 return;
             }
             current_user.print_user_information();
-        } else if (choice == -1) {
+        } else if (choice == 3) {
+            if (current_user == null || !current_user.user_type.equals("admin")) {
+                System.out.println("insufficient permissions");
+                return;
+            }
+            AircraftManager.add_aircraft();
+        }else if (choice == -1) {
             System.exit(0);
         }
         else {
