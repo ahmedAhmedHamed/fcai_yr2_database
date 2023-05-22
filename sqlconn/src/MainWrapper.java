@@ -55,7 +55,7 @@ public class MainWrapper {
      * logs the user in using account manager class
      */
     private void login() {
-//        AccountManager.login(); //TODO
+        AccountManager.login();
         current_user = AccountManager.current_user;
     }
 
