@@ -6,7 +6,7 @@ import java.util.Date;
  */
 public class Flights {
     int flight_id; //primary key
-    Date flight_date;
+    String flight_date;
     String source; //len 10
     String destination; //len 50
     int aircraft_id; //is foreign key from 'aircraft'
