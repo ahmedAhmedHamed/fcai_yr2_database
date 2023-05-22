@@ -16,6 +16,10 @@ public class ViewManager {
         int seats = 0;
         //TODO take input from gui
         ResultSet result = getFlightsFromDatabase(seats);
+        if (result == null) {
+            System.out.println("invalid query");
+            return;
+        }
         try{
             while (result.next()) {
                 //TODO insert widgets into gui
@@ -43,5 +47,6 @@ public class ViewManager {
             System.out.println("Failed to insert the new user into the database!");
             e.printStackTrace();
         }
+        return null;
     }
 }
