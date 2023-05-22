@@ -48,10 +48,10 @@ public class AccountManager {
      */
     private void addNewUserToDatabase() {
         try {
-            // Insert the new user into the database
-            String sql = "INSERT INTO user (username, password, userType) VALUES (?, ?, ?)";
+            // prepare a statement into a string to insert a user into the table.
+            String sql = "INSERT INTO users (username, password, user_type) VALUES (?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql);
-            // her will inset this info in table in database
+            //preparing the string with the values from the current user
             statement.setString(1, current_user.username);
             statement.setString(2, current_user.password);
             statement.setString(3, current_user.user_type);
