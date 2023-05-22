@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
+ * TODO make Performing operations on flights: booking, cancelling, changing flight class.)
  * main wrapper class responsible for calling functions from other classes
  */
 public class MainWrapper {
