@@ -5,9 +5,13 @@ import java.sql.SQLException;
 /**
  * main wrapper class responsible for calling functions from other classes
  */
-public class mainWrapper {
+public class MainWrapper {
     Connection conn;
-    mainWrapper() {
+
+    /**
+     * connects to database and enters the input loop
+     */
+    MainWrapper() {
         connect_to_database();
     }
 
