@@ -19,7 +19,7 @@ public class UpdateAircraft {
     private void alter_aircraft_information() {
         try {
             // prepare a statement into a string to insert a user into the table.
-            String sql = "UPDATE aircraft SET total_seats = ? WHERE aircraft_id = ?;";
+            String sql = "UPDATE aircraft SET total_seats = ? WHERE aircraft_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             //preparing the string with the values from the current user
             statement.setInt(1, Aircraft.total_seats);

@@ -1,34 +1,29 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Scanner;
 
-public class AddFlight {
-
-    Connection conn;
+public class UpdateFlight {
+    Connection conn = null;
     Flights flight = null;
 
-    AddFlight(Connection newConn) {
+    UpdateFlight(Connection newConn) {
         conn = newConn;
     }
 
-    public void add_flight() {
+    public void alter_flight() {
         flight = new Flights();
-        //TODO add input with gui
-        add_flight_to_database();
+        //TODO put in aircraft the id and the number of seats to be set.
+        alter_flight_information();
     }
 
-    private void add_flight_to_database() {
+    private void alter_flight_information() {
         try {
             // prepare a statement into a string to insert a user into the table.
-            String sql = "INSERT INTO flights (flight_date, sourcee, destination, aircraft_id) VALUES (?, ?, ?, ?)";
+            String sql = "UPDATE flights SET destination = ? WHERE flight_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             //preparing the string with the values from the current user
-            statement.setString(1, flight.flight_date);
-            statement.setString(2, flight.source);
-            statement.setString(3, flight.destination);
-            statement.setInt(4, flight.aircraft_id);
-
+            statement.setString(1, flight.destination);
+            statement.setInt(2, flight.flight_id);
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("A new aircraft was inserted successfully!");
