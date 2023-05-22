@@ -17,6 +17,17 @@ public class FlightOperations {
         add_booking_to_database();
     }
 
+    public void cancelBooking() {
+        String sql = "DELETE FROM booking WHERE booking_id = ?";
+        int id = 0;
+        try{
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
     private void add_booking_to_database() {
         try {
             // prepare a statement into a string to insert a user into the table.
