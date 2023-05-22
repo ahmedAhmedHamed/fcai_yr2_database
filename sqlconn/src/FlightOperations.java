@@ -28,6 +28,27 @@ public class FlightOperations {
             e.printStackTrace();
         }
     }
+
+    public void change_booking_class() {
+        int id = 0;
+        String new_class_type = "";
+        //TODO take input from GUI
+        try {
+            // prepare a statement into a string to insert a user into the table.
+            String sql = "UPDATE booking SET class_type = '?' WHERE booking_id = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            //preparing the string with the values from the current user
+            statement.setString(1, new_class_type);
+            statement.setInt(2, id);
+
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("classtype was changed successfully!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     private void add_booking_to_database() {
         try {
             // prepare a statement into a string to insert a user into the table.
