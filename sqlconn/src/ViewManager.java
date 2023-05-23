@@ -12,6 +12,47 @@ public class ViewManager {
         conn = newConn;
     }
 
+    public void print_report() {
+        try{
+            ResultSet Rflights = conn.prepareStatement("SELECT COUNT(*) FROM flights").executeQuery();
+            ResultSet Rbookings = conn.prepareStatement("SELECT COUNT(*) FROM booking").executeQuery();
+            ResultSet Rusers = conn.prepareStatement("SELECT COUNT(*) FROM users").executeQuery();
+            ResultSet Raircrafts = conn.prepareStatement("SELECT COUNT(*) FROM aircraft").executeQuery();
+
+            if (Rflights.next())
+            {
+                int flights = Rflights.getInt(1);
+                System.out.print("number of flights: ");
+                System.out.println(flights);
+            }
+
+            if (Rflights.next())
+            {
+                int bookings = Rbookings.getInt(1);
+                System.out.print("number of bookings: ");
+                System.out.println(bookings);
+            }
+
+            if (Rflights.next())
+            {
+                int users = Rusers.getInt(1);
+                System.out.print("number of users: ");
+                System.out.println(users);
+            }
+
+            if (Rflights.next())
+            {
+                int aircrafts = Raircrafts.getInt(1);
+                System.out.print("number of aircrafts: ");
+                System.out.println(aircrafts);
+            }
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showFlights() {
         flight = new Flights();
         int seats = 0;
@@ -32,14 +73,35 @@ public class ViewManager {
         }
         try{
             while (result.next()) {
-                System.out.println(result.getString(1));
-                //TODO insert widgets into gui
+                System.out.println(result.getInt(1));
+                System.out.println(result.getString(2));
+                System.out.println(result.getString(3));
+                System.out.println(result.getString(4));
+                System.out.println(result.getInt(5));
+                System.out.println("_______");
             }
         } catch (SQLException e) {
             System.out.println("Failed to show the flights from the database! :(");
             e.printStackTrace();
         }
 
+    }
+
+    public void show_booking() {
+        ResultSet result = getBookingsFromDatabase();
+        try{
+            while (result.next()) {
+                System.out.println(result.getInt(1));
+                System.out.println(result.getInt(2));
+                System.out.println(result.getInt(3));
+                System.out.println(result.getString(4));
+                System.out.println(result.getInt(5));
+                System.out.println("_______");
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to show the flights from the database! :(");
+            e.printStackTrace();
+        }
     }
 
     private ResultSet getFlightsFromDatabase(int total_seats) {
@@ -52,6 +114,21 @@ public class ViewManager {
             statement.setString(2, flight.source);
             statement.setString(3, flight.destination);
             statement.setInt(4, total_seats);
+
+            return statement.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Failed to insert the new user into the database!");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private ResultSet getBookingsFromDatabase() {
+        try {
+            // prepare a statement into a string to insert a user into the table.
+            String sql = "SELECT * from booking";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            //preparing the string with the values from the current user
 
             return statement.executeQuery();
         } catch (SQLException e) {
