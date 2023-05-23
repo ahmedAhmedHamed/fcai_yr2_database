@@ -35,6 +35,11 @@ public class MainWrapper {
         System.out.println("1 for login");
         System.out.println("2 for showing which user is shown");
         System.out.println("3 to enter a new aircraft");
+        System.out.println("4 for add aircraft");
+        System.out.println("5 for show flights");
+        System.out.println("6 for add flights");
+        System.out.println("7 for update flights");
+
         System.out.println("-1 TO EXIT");
 
         int choice = sc.nextInt();
