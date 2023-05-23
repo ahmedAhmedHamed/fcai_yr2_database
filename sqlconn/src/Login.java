@@ -30,13 +30,21 @@ public class Login {
         username_label.setBounds(10, 20, 80, 25);
         panel.add(username_label);
 
+        password_label.setBounds(10, 50, 80, 25);
+        panel.add(password_label);
+
         JTextField username_textField = new JTextField(50);
         username_textField.setBounds(100, 20, 165, 25);
         panel.add(username_textField);
 
-        JTextField password_textField = new JTextField(10);
-        username_textField.setBounds(100, 20, 165, 25);
+        JPasswordField password_textField = new JPasswordField(10);
+        password_textField.setBounds(100, 50, 165, 25);
         panel.add(password_textField);
+
+        JButton button = new JButton("Login");
+        button.setBounds(30, 80, 80, 25);
+
+        panel.add(button);
 
         frame.setVisible(true);
         return details;
