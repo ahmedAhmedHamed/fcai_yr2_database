@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,11 +11,16 @@ import java.util.Scanner;
  * TODO make Performing operations on flights: booking, cancelling, changing flight class.)
  * main wrapper class responsible for calling functions from other classes
  */
-public class MainWrapper {
+public class MainWrapper implements ActionListener {
     Connection conn;
     User current_user = null;
     AccountManager AccountManager = null;
     AircraftManager AircraftManager = null;
+    //GUI
+    JFrame frame;
+    JButton login_button;
+    JPanel panel;
+    JButton register_button;
 
     /**
      * connects to database and enters the input loop
@@ -20,47 +29,40 @@ public class MainWrapper {
         connect_to_database();
         AccountManager = new AccountManager(conn);
         AircraftManager = new AircraftManager(conn);
-
-        while (true) {
-            handleSignal();
-        }
+        setupGUI();
     }
 
-    public void handleSignal() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println();
-        System.out.println("insert choice");
-        System.out.println("0 for registration");
-        System.out.println("1 for login");
-        System.out.println("2 for showing which user is shown");
-        System.out.println("3 to enter a new aircraft");
-        System.out.println("-1 TO EXIT");
+    private void setupGUI() {
+        frame = new JFrame("My First GUI");
+        login_button = new JButton("Login");
+        register_button = new JButton("Register");
 
-        int choice = sc.nextInt();
+        login_button.addActionListener(this);//e.getActionCommand() == Login (String)
+        register_button.addActionListener(this);//e.getActionCommand() == Register (String)
 
-        if (choice == 0) {
-            register();
-        }
-        else if (choice == 1) {
+        panel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+        panel.setLayout(new GridLayout(0, 1));
+        panel.add(login_button);
+        panel.add(register_button);
+
+        frame.add(panel, BorderLayout.CENTER);
+
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+       handleSignal(e.getActionCommand());
+    }
+
+    public void handleSignal(String signal) {
+
+        if (signal.equals("Login"))
+        {
             login();
-        }
-        else if (choice == 2) {
-            if (current_user == null) {
-                System.out.println("no user is logged in at the moment");
-                return;
-            }
-            current_user.print_user_information();
-        } else if (choice == 3) {
-            if (current_user == null || !current_user.user_type.equals("admin")) {
-                System.out.println("insufficient permissions");
-                return;
-            }
-            AircraftManager.add_aircraft();
-        }else if (choice == -1) {
-            System.exit(0);
-        }
-        else {
-            System.out.println("undefined choice");
         }
     }
 
@@ -68,8 +70,9 @@ public class MainWrapper {
      * logs the user in using account manager class
      */
     private void login() {
-        AccountManager.login();
-        current_user = AccountManager.current_user;
+        panel.removeAll();
+//        AccountManager.login();
+//        current_user = AccountManager.current_user;
     }
 
     /**
@@ -105,4 +108,6 @@ public class MainWrapper {
             System.exit(0);
         }
     }
+
+
 }
