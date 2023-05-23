@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class ViewManager {
     Connection conn = null;
@@ -15,6 +16,15 @@ public class ViewManager {
         flight = new Flights();
         int seats = 0;
         //TODO take input from gui
+        Scanner sc = new Scanner(System.in);
+        System.out.println("insert the minimum number of seats");
+        seats = sc.nextInt();
+        System.out.println("insert the flight date");
+        flight.flight_date = sc.nextLine();
+        System.out.println("insert the destination");
+        flight.destination = sc.nextLine();
+        System.out.println("insert the source");
+        flight.source = sc.nextLine();
         ResultSet result = getFlightsFromDatabase(seats);
         if (result == null) {
             System.out.println("invalid query");
@@ -22,6 +32,7 @@ public class ViewManager {
         }
         try{
             while (result.next()) {
+                System.out.println(result.getString(1));
                 //TODO insert widgets into gui
             }
         } catch (SQLException e) {
@@ -34,7 +45,7 @@ public class ViewManager {
     private ResultSet getFlightsFromDatabase(int total_seats) {
         try {
             // prepare a statement into a string to insert a user into the table.
-            String sql = "SELECT f.flight_id, f.flight_date, f.sourcee, f.destination, a.aircraft_name, a.total_seats FROM flights f INNER JOIN aircraft a ON f.aircraft_id = a.aircraft_id WHERE f.flight_date = '?' AND f.sourcee = '?' AND f.destination = '?' AND a.total_seats >= ?\n";
+            String sql = "SELECT f.flight_id, f.flight_date, f.sourcee, f.destination, a.aircraft_name, a.total_seats FROM flights f INNER JOIN aircraft a ON f.aircraft_id = a.aircraft_id WHERE f.flight_date = '?' AND f.sourcee = '?' AND f.destination = '?' AND a.total_seats >= ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             //preparing the string with the values from the current user
             statement.setString(1, flight.flight_date);

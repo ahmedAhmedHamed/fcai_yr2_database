@@ -15,6 +15,15 @@ public class AddFlight {
     public void add_flight() {
         flight = new Flights();
         //TODO add input with gui
+        Scanner sc = new Scanner(System.in);
+        System.out.println("insert destination");
+        flight.destination = sc.nextLine();
+        System.out.println("insert flightdate");
+        flight.flight_date = sc.nextLine();
+        System.out.println("insert source");
+        flight.source = sc.nextLine();
+        System.out.println("insert aircraft id");
+        flight.flight_id = sc.nextInt();
         add_flight_to_database();
     }
 

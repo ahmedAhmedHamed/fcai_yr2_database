@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class FlightOperations {
     Connection conn = null;
@@ -13,13 +14,25 @@ public class FlightOperations {
 
     public void book_flight() {
         booking = new Booking();
+        Scanner sc = new Scanner(System.in);
         //TODO take input and place it in the booking
+        System.out.println("insert classtype");
+        booking.class_type = sc.nextLine();
+        System.out.println("insert user ID");
+        booking.user_id = sc.nextInt();
+        System.out.println("insert flight ID");
+        booking.flight_id = sc.nextInt();
+        System.out.println("insert seats booked");
+        booking.seats_booked = sc.nextInt();
         add_booking_to_database();
     }
 
     public void cancelBooking() {
         String sql = "DELETE FROM booking WHERE booking_id = ?";
         int id = 0;
+        System.out.println("insert ID");
+        Scanner sc = new Scanner(System.in);
+        id = sc.nextInt();
         try{
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, id);
@@ -32,6 +45,9 @@ public class FlightOperations {
     public void change_booking_class() {
         int id = 0;
         String new_class_type = "";
+        Scanner sc = new Scanner(System.in);
+        id = sc.nextInt();
+        new_class_type = sc.nextLine();
         //TODO take input from GUI
         try {
             // prepare a statement into a string to insert a user into the table.

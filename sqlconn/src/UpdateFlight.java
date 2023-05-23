@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class UpdateFlight {
     Connection conn = null;
@@ -11,8 +12,13 @@ public class UpdateFlight {
     }
 
     public void alter_flight() {
+        Scanner sc = new Scanner(System.in);
+
         flight = new Flights();
-        //TODO put in aircraft the id and the number of seats to be set.
+        System.out.println("insert id of flight");
+        flight.flight_id = sc.nextInt();
+        System.out.println("insert new destination of plane");
+        flight.destination = sc.nextLine();
         alter_flight_information();
     }
 

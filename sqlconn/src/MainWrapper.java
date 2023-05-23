@@ -1,23 +1,18 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
+ * TODO make Performing operations on flights: booking, cancelling, changing flight class.)
  * main wrapper class responsible for calling functions from other classes
  */
-public class MainWrapper implements ActionListener {
+public class MainWrapper {
     Connection conn;
     User current_user = null;
     AccountManager AccountManager = null;
     AircraftManager AircraftManager = null;
-    //GUI
-    JFrame frame = new JFrame("user login.");
-    JPanel panel;
+    FlightManager flight_manager = null;
 
     /**
      * connects to database and enters the input loop
@@ -26,59 +21,77 @@ public class MainWrapper implements ActionListener {
         connect_to_database();
         AccountManager = new AccountManager(conn);
         AircraftManager = new AircraftManager(conn);
-        setup_initial_page();
+
+        while (true) {
+            handleSignal();
+        }
     }
 
+    public void handleSignal() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println();
+        System.out.println("insert choice");
+        System.out.println("0 for registration");
+        System.out.println("1 for login");
+        System.out.println("2 for showing which user is shown");
+        System.out.println("3 to enter a new aircraft");
+        System.out.println("-1 TO EXIT");
 
-    void setup_initial_page() {
-        frame = new JFrame("user login.");
-        make_panel();
-        add_buttons();
-        frameAdjustments();
-    }
+        int choice = sc.nextInt();
 
-    void frameAdjustments() {
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
-
-    void make_panel() {
-        panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
-        panel.setLayout(new GridLayout(0, 1));
-
-        frame.add(panel, BorderLayout.CENTER);
-    }
-
-    private void add_buttons() {
-        JButton login_button = new JButton("Login");
-        JButton register_button = new JButton("Register");
-
-        login_button.addActionListener(this);//e.getActionCommand() == Login (String)
-        register_button.addActionListener(this);//e.getActionCommand() == Register (String)
-
-        panel.add(login_button);
-        panel.add(register_button);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-       handleSignal(e.getActionCommand());
-    }
-
-    public void handleSignal(String signal) {
-
-        if (signal.equals("Login"))
+        if (choice == 0) {
+            register();
+        }
+        else if (choice == 1) {
             login();
-
+        }
+        else if (choice == 2) {
+            if (current_user == null) {
+                System.out.println("no user is logged in at the moment");
+                return;
+            }
+            current_user.print_user_information();
+        } else if (choice == 3) {
+            if (current_user == null || !current_user.user_type.equals("admin")) {
+                System.out.println("insufficient permissions");
+                return;
+            }
+            AircraftManager.add_aircraft();
+        } else if (choice == 4) {
+            if (current_user == null || !current_user.user_type.equals("admin")) {
+                System.out.println("insufficient permissions");
+                return;
+            }
+            AircraftManager.update_aircraft();
+        } else if (choice == 5) {
+            ViewManager VM = new ViewManager(conn);
+            VM.showFlights();
+        } else if (choice == 6) {
+            if (current_user == null || !current_user.user_type.equals("admin")) {
+                System.out.println("insufficient permissions");
+                return;
+            }
+            flight_manager = new FlightManager(conn);
+            flight_manager.add_new_flight();
+        } else  if (choice == 7) {
+            if (current_user == null || !current_user.user_type.equals("admin")) {
+                System.out.println("insufficient permissions");
+                return;
+            }
+            flight_manager = new FlightManager(conn);
+            flight_manager.update_flight();
+        }else if (choice == -1) {
+            System.exit(0);
+        }
+        else {
+            System.out.println("undefined choice");
+        }
     }
 
     /**
      * logs the user in using account manager class
      */
     private void login() {
-        frame.dispose();
         AccountManager.login();
         current_user = AccountManager.current_user;
     }
@@ -116,6 +129,4 @@ public class MainWrapper implements ActionListener {
             System.exit(0);
         }
     }
-
-
 }
