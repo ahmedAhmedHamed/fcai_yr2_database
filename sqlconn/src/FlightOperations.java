@@ -68,7 +68,7 @@ public class FlightOperations {
     private void add_booking_to_database() {
         try {
             // prepare a statement into a string to insert a user into the table.
-            String sql = "INSERT INTO booking (booking_id, user_id, flight_id, class_type, seats_booked) VALUES (?, ?, '?', ?)";
+            String sql = "INSERT INTO booking (booking_id, user_id, flight_id, class_type, seats_booked) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql);
             //preparing the string with the values from the current user
             statement.setInt(1, booking.booking_id);

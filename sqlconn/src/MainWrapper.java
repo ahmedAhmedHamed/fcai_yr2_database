@@ -36,14 +36,15 @@ public class MainWrapper {
         System.out.println("2 for showing which user is shown");
         System.out.println("3 to enter a new aircraft");
         System.out.println("4 for update aircraft");
-        System.out.println("5 for show flights");
+        System.out.println("5 for search flights");
         System.out.println("6 for add flights");
         System.out.println("7 for update flights");
         System.out.println("8 for booking");
         System.out.println("9 for cancelling bookings");
-        System.out.println("10 for cancelling bookings");
+        System.out.println("10 to change booking classes");
         System.out.println("11 for showing bookings");
         System.out.println("12 for a report");
+        System.out.println("13 to show all flights");
 
 
         System.out.println("-1 TO EXIT");
@@ -106,6 +107,9 @@ public class MainWrapper {
         } else if (choice == 12) {
             ViewManager VM = new ViewManager(conn);
             VM.print_report();
+        } else if (choice == 13) {
+            ViewManager VM = new ViewManager(conn);
+            VM.show_all_flights();
         }else if (choice == -1) {
             System.exit(0);
         }

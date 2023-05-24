@@ -17,6 +17,7 @@ public class UpdateFlight {
         flight = new Flights();
         System.out.println("insert id of flight");
         flight.flight_id = sc.nextInt();
+        sc.nextLine();
         System.out.println("insert new destination of plane");
         flight.destination = sc.nextLine();
         alter_flight_information();
@@ -32,7 +33,7 @@ public class UpdateFlight {
             statement.setInt(2, flight.flight_id);
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new aircraft was inserted successfully!");
+                System.out.println("success!");
             }
         } catch (SQLException e) {
             System.out.println("Failed to insert the new user into the database!");

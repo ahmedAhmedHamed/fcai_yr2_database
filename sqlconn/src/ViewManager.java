@@ -26,21 +26,21 @@ public class ViewManager {
                 System.out.println(flights);
             }
 
-            if (Rflights.next())
+            if (Rbookings.next())
             {
                 int bookings = Rbookings.getInt(1);
                 System.out.print("number of bookings: ");
                 System.out.println(bookings);
             }
 
-            if (Rflights.next())
+            if (Rusers.next())
             {
                 int users = Rusers.getInt(1);
                 System.out.print("number of users: ");
                 System.out.println(users);
             }
 
-            if (Rflights.next())
+            if (Raircrafts.next())
             {
                 int aircrafts = Raircrafts.getInt(1);
                 System.out.print("number of aircrafts: ");
@@ -60,6 +60,7 @@ public class ViewManager {
         Scanner sc = new Scanner(System.in);
         System.out.println("insert the minimum number of seats");
         seats = sc.nextInt();
+        sc.nextLine();
         System.out.println("insert the flight date");
         flight.flight_date = sc.nextLine();
         System.out.println("insert the destination");
@@ -86,6 +87,23 @@ public class ViewManager {
         }
 
     }
+    public void show_all_flights() {
+        ResultSet result = get_all_flights();
+
+        try{
+            while (result.next()) {
+                System.out.println(result.getInt(1));
+                System.out.println(result.getString(2));
+                System.out.println(result.getString(3));
+                System.out.println(result.getString(4));
+                System.out.println(result.getInt(5));
+                System.out.println("_______");
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to show the flights from the database! :(");
+            e.printStackTrace();
+        }
+    }
 
     public void show_booking() {
         ResultSet result = getBookingsFromDatabase();
@@ -107,7 +125,7 @@ public class ViewManager {
     private ResultSet getFlightsFromDatabase(int total_seats) {
         try {
             // prepare a statement into a string to insert a user into the table.
-            String sql = "SELECT f.flight_id, f.flight_date, f.sourcee, f.destination, a.aircraft_name, a.total_seats FROM flights f INNER JOIN aircraft a ON f.aircraft_id = a.aircraft_id WHERE f.flight_date = '?' AND f.sourcee = '?' AND f.destination = '?' AND a.total_seats >= ?";
+            String sql = "SELECT f.flight_id, f.flight_date, f.sourcee, f.destination, a.aircraft_name, a.total_seats FROM flights f INNER JOIN aircraft a ON f.aircraft_id = a.aircraft_id WHERE f.flight_date = ? AND f.sourcee = ? AND f.destination = ? AND a.total_seats >= ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             //preparing the string with the values from the current user
             statement.setString(1, flight.flight_date);
@@ -117,7 +135,17 @@ public class ViewManager {
 
             return statement.executeQuery();
         } catch (SQLException e) {
-            System.out.println("Failed to insert the new user into the database!");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private ResultSet get_all_flights() {
+        try {
+            String sql = "SELECT * FROM flights";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            return statement.executeQuery();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
